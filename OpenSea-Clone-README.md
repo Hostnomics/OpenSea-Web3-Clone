@@ -65,6 +65,24 @@ nvm use 17.0.1
 
 > `npm i @openzeppelin/contracts@4.5.0`
 
+7. Fire up npm server
+
+> `npm run start`
+
+
+
+
+
+---
+---
+
+
+## Resources
+
+1. ERC721 [Open Zeppelin Docs on ERC721 Standard](https://docs.openzeppelin.com/contracts/2.x/api/token/erc721#ERC721). [(6:36:12)](https://youtu.be/cGQHXmCS94M?t=23772).
+
+
+
 
 
 
