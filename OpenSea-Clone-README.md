@@ -53,7 +53,17 @@ nvm use 17.0.1
 
 > `npm install`
 
+4. Install the **React Router DOM** dependencies from within our `nft-marketplace` directory: 
 
+> `npm install react-router-dom@6`
+
+5. Install the **IPFS http client**: (links and **upload the form to mint**!!) [(06:28:45)](https://youtu.be/cGQHXmCS94M?t=23325).
+
+> `npm install ipfs-http-client@56.0.1`
+
+6. Finally, install **Open Zeppelin** https://www.openzeppelin.com/contracts
+
+> `npm i @openzeppelin/contracts@4.5.0`
 
 
 
