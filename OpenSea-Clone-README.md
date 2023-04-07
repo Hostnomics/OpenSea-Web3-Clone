@@ -244,8 +244,10 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
 
     - Modify deploy script to compile `Marketplace.sol` at `(6:59:14)`
 
-
-
+    - Run the deploy script from terminal: 
+        - `npx hardhat run src/backend/scripts/deploy.js --network localhost`
+        - **NOTE:** Must run Hardhat node in another terminal first (`npx hardhat node`)
+            - See [Deploy Script Error When Not Running Hardhat Node First](#)
 
 
 
