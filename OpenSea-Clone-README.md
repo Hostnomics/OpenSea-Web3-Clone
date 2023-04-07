@@ -94,15 +94,18 @@ NFT contract address 0x5FbDB2315678afecb367f032d93F642f64180aa3
 
 
 9. `(6:51:42)` - After Solidity Compilation successful (_in step 9_) start the **Hardhat Console**: 
+    - `(6:54:09)` - **specify which network you want to use when entering the console**
 
-> `npx hardhat console`
+> `npx hardhat console --network localhost`
+-
+    - instead of `npx hardhat console`
 
 - **Close Hardhat console with `.exit`**
 
 > `.exit`
 
 - **Hardhat Console Commands**
-    - Set `getContractAt("Solidity-Contract-Name", "Contract-Address-From-Terminal")`
+    - Set `getContractAt("NAME-OF-Solidity-Contract", "Contract-Address-From-Terminal")`
 
     > `const contract = await ethers.getContractAt("NFT", "0x5FbDB2315678afecb367f032d93F642f64180aa3")`
 
@@ -133,9 +136,56 @@ FIXED!!
 undefined
 
 > contract
-[Returns all the details]
+[Returns all the details, see _Hardhat-NFT-Console-Details.MD_]
 
 ```
+
+see **_Hardhat-NFT-Console-Details.MD_** (6:53:00)
+
+
+9. (_continued_) Define tokenCount()
+
+    > const tokenCount = await contract.tokenCount()
+
+    > tokenCount
+
+**RETURNS:** `BigNumber { value: "0" }`
+
+```console
+nft-marketplace % npx hardhat console --network localhost
+Welcome to Node.js v16.14.0.
+Type ".help" for more information.
+> const contract = await ethers.getContractAt("NFT", "0x5FbDB2315678afecb367f032d93F642f64180aa3")
+undefined
+> const tokenCount = await contract.tokenCount()
+undefined
+> tokenCount
+BigNumber { value: "0" }
+
+```
+
+9. (_continued_) Set Contract name to variable `name` and symbol to `symbol`
+
+    > const name = await contract.name()
+
+    > const symbol = await contract.symbol()
+
+```js
+
+> const name = await contract.name()
+undefined
+> name
+'dApp NFT'
+
+> const symbol = await contract.symbol()
+undefined
+> symbol
+'DAPP'
+
+```
+
+
+    
 
 
 ---
@@ -145,10 +195,15 @@ undefined
 ## Resources
 
 1. ERC721 [Open Zeppelin Docs on ERC721 Standard](https://docs.openzeppelin.com/contracts/2.x/api/token/erc721#ERC721). [(6:36:12)](https://youtu.be/cGQHXmCS94M?t=23772).
+    - https://docs.openzeppelin.com/contracts/2.x/api/token/erc721#ERC721
 
 2. getContractFactory method from [Ethers.js Documentation](https://docs.ethers.org/v5/). on the ethers object. `(6:48:33)`
     - Version 5: https://docs.ethers.org/v5/
 
+3. Open Zeppelin IERC721.sol contract: 
+    - https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol
+
+
 
 
 ---
@@ -156,7 +211,7 @@ undefined
 
 
 
-## Key Steps
+## Time Stamps of Interest
 
 1. NFT.sol
 
@@ -175,11 +230,21 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
 ```
 
 
+3. Interact with NFT.sol contract in Hardhat console
+    - Node [Version error resolved via this ]
+        - (_Norton security notice 10.0.0.XXX_ [can be ignored](https://www.quora.com/What-does-it-mean-if-Norton-Security-displays-a-notice-that-reads-The-computer-10-0-0-xxx-is-attempting-to-access-rapportd-on-your-computer-I-have-a-2017-MacBook-Air-running-Catalina-10-15-3).)
+    - (6:53:00) - Use function `tokenCount()': [FunctionFragment],` in hardhat console
 
 
+4. Build `Marketplace.sol` contract [(6:55:19)](https://youtu.be/cGQHXmCS94M?t=24919)
+
+    - Covers [Solidity Interfaces at (6:56:14)](https://youtu.be/cGQHXmCS94M?t=24974) 
+        - Interfaces defines how to call all the externally accessible functions of a smart contract (6:56:49)
+        - (6:56:55) - Define a reentrancy guard contract to protect Marketplace.sol from reentrancy attacks
+
+    - Modify deploy script to compile `Marketplace.sol` at `(6:59:14)`
 
 
-https://www.quora.com/What-does-it-mean-if-Norton-Security-displays-a-notice-that-reads-The-computer-10-0-0-xxx-is-attempting-to-access-rapportd-on-your-computer-I-have-a-2017-MacBook-Air-running-Catalina-10-15-3
 
 
 
