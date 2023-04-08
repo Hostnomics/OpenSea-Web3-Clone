@@ -33,9 +33,8 @@ nvm use 19.4.0
 // Now using node v19.4.0 (npm v9.4.0)
 
 
-//switch back to 17.0.1:
-nvm use 17.0.1
-// Now using node v17.0.1 (npm v8.1.0)
+//switch back to 17.0.1: nvm use 17.0.1  // Now using node v17.0.1 (npm v8.1.0)
+nvm use 16.14.0  // Now using node v16.14.0 (npm v8.3.1)
 
 ```
 
@@ -185,6 +184,11 @@ undefined
 ```
 
 
+10. Testing
+    - Run our first test `(7:09:35)` _(deployed NFT.sol contract returns correct NAME and SYMBOL)_ 
+
+    > `npx hardhat test`
+
     
 
 
@@ -277,7 +281,7 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
             ```
         
 
-5. Build Frontend [(7:02:40)](https://youtu.be/cGQHXmCS94M?t=25360)
+5. Testing [(7:02:40)](https://youtu.be/cGQHXmCS94M?t=25360)
 
     - Bugs cost more in Web3
         - Every time we make a change to our contract. Each time we implement some functionality to our smart contract, we need to test it out to make sure it's doing what we expect it to do.
@@ -289,7 +293,31 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
 
     - **Create Tests Directory** `(7:04:00)`
         - Create `src/backend/test`
-        - 
+        - Use [Waffle](https://getwaffle.io) and [Chai](https://www.chaijs.com/)    
     
+    - Run our first test `(7:09:35)` _(deployed NFT.sol contract returns correct NAME and SYMBOL)_ 
+        - `npx hardhat test`
+
+        ```js
+
+        nft-marketplace % npx hardhat test
+
+
+        NFTMarketplace
+            Deployment
+            ✓ Should track name and symbol of nft collection
+
+
+        1 passing (550ms)
+
+        ```
+
+8. Finish Building out `Marketplace.sol` [(7:12:35)](https://youtu.be/cGQHXmCS94M?t=25955)
+
+    - Add `struct Item` `(7:13:21)` - _Solidity equivalent of JavaScript Objects_.
+
+ 
+
+7. Build Frontend [()]()
         
         

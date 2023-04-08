@@ -1,4 +1,4 @@
- // SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 
 // pragma solidity >=0.8.2 <0.9.0;
 // pragma solidity ^0.8.4; // tutorial pragma statement
@@ -21,6 +21,16 @@ contract Marketplace is ReentrancyGuard {
 
     // constructor function initialize fee %
         uint public itemCount;
+
+    // struct added at (7:13:20)
+        struct Item {
+            uint itemId;
+            IERC721 nft;
+            uint tokenId;
+            uint price;
+            address payable seller;
+            bool sold;
+        }  
 
         constructor (uint _feePercent) {
             feeAccount = payable(msg.sender);
