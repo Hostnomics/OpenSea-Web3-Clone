@@ -140,7 +140,7 @@ undefined
 
 ```
 
-see **_Hardhat-NFT-Console-Details.MD_** (6:53:00)
+_See_ [**_Hardhat-NFT-Console-Details.MD_**](https://github.com/Hostnomics/OpenSea-Web3-Clone/blob/main/changelog-for-nft-marketplace/Hardhat-NFT-Console-Details.MD) (6:53:00)
 
 
 9. (_continued_) Define tokenCount()
@@ -247,7 +247,49 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
     - Run the deploy script from terminal: 
         - `npx hardhat run src/backend/scripts/deploy.js --network localhost`
         - **NOTE:** Must run Hardhat node in another terminal first (`npx hardhat node`)
-            - See [Deploy Script Error When Not Running Hardhat Node First](#)
+            - _See_ [Deploy Script Error When Not Running Hardhat Node First](https://github.com/Hostnomics/OpenSea-Web3-Clone/blob/main/changelog-for-nft-marketplace/Deploy_Script_Error_Without_HardHat_Node.md)
 
+    - Interact with the `Marketplace.sol` contract: 
+        - Start Hardhat Console
+            - `npx hardhat console --network localhost`
+        - Set Marketplace to variable `marketplace`
+            - `const marketplace = await ethers.getContractAt("Marketplace", "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512")`
+                - Contract Name: `Marketplace`
+                - Terminal Address: Marketplace contract address `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
 
+        - Fetch the Fee Percent on the Marketplace:
+            - `const feePercent = await marketplace.feePercent()`
+                - Variable set in _feePercent constructor: `feePercent = _feePercent;`
+                - Returns `BigNumber { value: "1" }` for the 1% we set in the deploy script:
+                    - `const marketplace = await Marketplace.deploy(1); `
+        - Fetch feeAccount()
+            - `const seller = await marketplace.feeAccount()`
+            - Returns: _(msg.sender is the 0th account created by Hardhat node)_
+            ```js
+                > const deployer = await marketplace.feeAccount
+                undefined
+                > deployer
+                [Function (anonymous)]
+                > const seller = await marketplace.feeAccount()
+                undefined
+                > seller
+                '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+            ```
+        
 
+5. Build Frontend [(7:02:40)](https://youtu.be/cGQHXmCS94M?t=25360)
+
+    - Bugs cost more in Web3
+        - Every time we make a change to our contract. Each time we implement some functionality to our smart contract, we need to test it out to make sure it's doing what we expect it to do.
+        - so we write test scripts which automate this testing process. 
+        - Testing Smart Contracts is very important b/c **once a contract has been deployed, you can't change its code.**
+            - It's not like web 2 development where we can easily push out bug fixes after you've deployed your app. 
+        - `(7:03:25)` - The cost of bugs for **Smart Contract Developers** is **much higher.**
+            - So writing robust tests for your smart contracts is an integral part of your development process. 
+
+    - **Create Tests Directory** `(7:04:00)`
+        - Create `src/backend/test`
+        - 
+    
+        
+        
