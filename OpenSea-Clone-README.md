@@ -317,7 +317,11 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
     - Add `struct Item` `(7:13:21)` - _Solidity equivalent of JavaScript Objects_.
     - Open Zeppelin's [ReentrancyGuard Docs](https://docs.openzeppelin.com/contracts/4.x/api/security#ReentrancyGuard) `(7:16:18)`
 
-    - Add `purchaseItem` function at `(7:26:05)`
+    - Add `purchaseItem` and `getTotalPrice` functions at `(7:26:05)`
+
+    - Add `Bought` event `(7:31:00)`
+
+    - Write tests for our new `purchaseItem` and `getTotalPrice` functions at `(7:32:29)`
 
 
 7. Build Frontend [()]()

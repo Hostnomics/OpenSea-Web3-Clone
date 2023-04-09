@@ -43,6 +43,18 @@ contract Marketplace is ReentrancyGuard {
             address indexed seller
         );
 
+    // Add Bought Event at (7:31:00) - Additional field, indexed Buyer address that called the purchaseItem function
+    // We use our 3rd index on buyer address so we can show all of the NFTS a buyer has purchased from the marketplace in our frontend 
+    // by searching for Bought events and matching the buyer address as the key. buyer addy equal to account made purchase
+        event Bought (
+            uint itemId,
+            address indexed nft,
+            uint tokenId,
+            uint price,
+            address indexed seller, 
+            address indexed buyer
+        );
+
     // mapping (7:14:25) - special data structure in solidity. Key=>value store. Lookup based on Key.
     // itemId -> Item
        mapping(uint => Item) public items; 
@@ -90,8 +102,60 @@ contract Marketplace is ReentrancyGuard {
                 _price,
                 msg.sender
             );
+        } // end of makeItem function
+
+    // (7:26:05) - Add purchaseItem and getTotalPrice functions:
+        // takes the Item ID that the user wants to purchase. Ether sent to seller and a small portion to the fee account
+        function purchaseItem(uint _itemId) external payable nonReentrant {
+            // (7:28:08) - Assign getTotalPrice() to variable _totalPrice:
+            uint _totalPrice = getTotalPrice(_itemId); 
+
+            // Assign item from `items` mapping to a variable. Since variable of a complex type (type Struct), we have to declare the storage location of the variable (7:28:24)
+            // storage means this variable is reading directly from this storage mapping. It is NOT creating an in memory copy of the item.
+            Item storage item = items[_itemId];
+
+            // Check that the itemId is valid
+            require(_itemId > 0 && _itemId <= itemCount, "item doesn't exist"); 
+
+            // Make sure that the ether sent with this function call (msg.value) is >= total price. (Amt sent >= totalPrice)
+            require(msg.value >= _totalPrice, "not enough ether to cover item price and market fee");
+
+            // Check item.sold bool value is false. Item not already sold. bang operator (!) sets item.sold to opposite boolean value:
+            // If item.sold = false, then !item.sold = true, which triggers our custom error message
+            // (7:29:42) If item.sold = true, then !item.sold = false and when require stmt's condition evaluates to false, it causes the function to REVERT!
+            require(!item.sold, "item already sold"); 
+
+            // Pay the seller and the feeAccount (both are of type address)
+            item.seller.transfer(item.price); 
+            feeAccount.transfer(_totalPrice - item.price);
+
+            // Update bool value to true
+            item.sold = true;
+
+            // Transfer NFT to Buyer (7:30:23) - (1) From Addy, (2) To addy, (3) item identified by tokenId
+            // The SENDER (msg.sender) of THIS function call (purchaseItem()) is the buyer
+            // transferFrom called on the NFT.sol contract (?)
+            item.nft.transferFrom(address(this), msg.sender, item.tokenId); 
+
+            // (7:31:56) emit Bought event: 
+            emit Bought(
+                _itemId,
+                address(item.nft),
+                item.tokenId,
+                item.price,
+                item.seller,
+                msg.sender
+            );
 
         }
 
+        // Gets price of Item which is (1) Cost set by seller + (2) market fees / fee account. Total Price is returned as uint.
+        // we want to be able to call getTotalPrice() from within purchaseItem AND outside of this contract becuase
+        // whenever a user wants to be able to buy an item, we need to know how much ether they need to send with the call to the puchaseItem function
+        function getTotalPrice(uint _itemId) view public returns(uint) {
+           //fetch price of items from the items mapping (7:27:38)
+        //    return(items[_itemId].price*(100 * feePercent)/100);
+           return((items[_itemId].price*(100 + feePercent))/100);
+        }
 
 }
