@@ -64,6 +64,55 @@ describe("NFTMarketplace", async function(){
     }) // "Minting NFTs" describe header
 
 
+    // (07:20:39) - Added "Making marketplace ITEMS" test
+        describe("Making marketplace items", function (){
+            // ReferenceError: price is not defined
+                let price = 1
+                beforeEach(async function() {
+                    // addr1 mints an nft 
+                    await nft.connect(addr1).mint(URI)    
+                    // addr1 approves marketplace to spend nft
+                    await nft.connect(addr1).setApprovalForAll(marketplace.address, true)            
+                }) // beforeEach: marketplace items header
+
+    // (17:21:34) - Success Case Test create Item, makeItem() and event Offered
+            it("Should track newly created item, transfer NFT from seller to marketplace and emit Offered event", async function () {
+                // addr1 offers their nft at a price at 1 ether
+                // Price set to Wei (7:22:01)
+                await expect(marketplace.connect(addr1).makeItem(nft.address, 1, toWei(price)))
+                    .to.emit(marketplace, "Offered")
+                    .withArgs(
+                        1,
+                        nft.address,
+                        1,
+                        toWei(price),
+                        addr1.address
+                    )
+                
+                // (7:23:35): 2nd expect stmt
+                // ownerOf fn on the nft contract is equal to the marketplace address
+                expect(await nft.ownerOf(1)).to.equal(marketplace.address); 
+                // Item count (after 1 item created) should now be equal to 1
+                expect(await marketplace.itemCount()).to.equal(1);
+
+                // Get first newly created item from items mapping, by itemID Key 1
+                const item = await marketplace.items(1)
+                expect(item.itemId).to.equal(1)
+                expect(item.nft).to.equal(nft.address)
+                expect(item.tokenId).to.equal(1)
+                expect(item.price).to.equal(toWei(price))
+                expect(item.sold).to.equal(false)
+            }) // IT: new items, transfer, event header
+
+        }); // "Making Items" describe header
+
+    // (17:24:38) - FAILURE Case Test create Item, makeItem() and event Offered
+            it("Should fail if price is set to zero", async function () {
+                await expect(
+                    marketplace.connect(addr1).makeItem(nft.address, 1, 0)
+                ).to.be.revertedWith("Price must be greater than zero.");
+            }) // IT: fail if price 0 header
+
 
 }) //NFTMarketplace describe header
 
