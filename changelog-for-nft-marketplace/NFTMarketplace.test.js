@@ -104,16 +104,111 @@ describe("NFTMarketplace", async function(){
                 expect(item.sold).to.equal(false)
             }) // IT: new items, transfer, event header
 
-        }); // "Making Items" describe header
-
     // (17:24:38) - FAILURE Case Test create Item, makeItem() and event Offered
-            it("Should fail if price is set to zero", async function () {
-                await expect(
-                    marketplace.connect(addr1).makeItem(nft.address, 1, 0)
-                ).to.be.revertedWith("Price must be greater than zero.");
-            }) // IT: fail if price 0 header
+    it("Should fail if price is set to zero", async function () {
+        await expect(
+            marketplace.connect(addr1).makeItem(nft.address, 1, 0)
+        ).to.be.revertedWith("Price must be greater than zero.");
+    }) // IT: fail if price 0 header
+
+}); // "Making Items" describe header
+
+
+// (7:32:34) - Purchase items in Marketplace.sol tests:
+describe("Purchasing marketplace items", function (){
+    //this local price fn will be 2 ether
+    let price = 2;
+
+    let totalPriceInWei //move totalPriceInWei outside of success case so it's available to both (success and fail cases) (7:37:59)
+
+    //Add the beforeEach hook: 
+    beforeEach(async function() {
+        // addr1 mints an nft 
+        await nft.connect(addr1).mint(URI)    
+        // addr1 approves marketplace to spend nft
+        await nft.connect(addr1).setApprovalForAll(marketplace.address, true)     
+        // addr1 makes their nft a marketplace item (7:32:51) - 
+        // calls makeItem() fn, to list nft on marketplace at a price of 2 ether
+        await marketplace.connect(addr1).makeItem(nft.address, 1, toWei(price))             
+    }) // beforeEach: "Purchasing items" header
+
+
+// (7:33:20) - Success case
+    it("Should update item as sold, pay seller, transfer NFT to buyer, charge fees and emit a Bought event", async function () {
+    // Seller and Fee Account Balance BEFORE transfer (so we can check later that they increased by the appropriate amount)
+        const sellerInitialEthBal = await addr1.getBalance()
+        const feeAccountInitialEthBal = await deployer.getBalance()
+
+        // fetch the Total Price of the item (price + market fees)
+        totalPriceInWei = await marketplace.getTotalPrice(1); // itemId = 1
+
+        //(7:34:04) addr 2 purchases item  (pass amount in as meta data object "{ value: X }")
+        await expect(marketplace.connect(addr2).purchaseItem(1, { value: totalPriceInWei })).to.emit(marketplace, "Bought").withArgs(
+            1,
+            nft.address,
+            1,
+            toWei(price),
+            addr1.address,
+            addr2.address
+        )
+    // Seller and Fee Account Balance AFTER transfer
+        const sellerFinalEthBal = await addr1.getBalance()
+        const feeAccountFinalEthBal = await deployer.getBalance()
+    
+// Compare Final Balances to Initial Balances (07:35:10)
+    // Seller should receive payment for the price of the NFT sold.
+        // Seller FINAL Bal = Initial BAL + NFT PRICE)
+        expect(+fromWei(sellerFinalEthBal)).to.equal(+price + +fromWei(sellerInitialEthBal))
+    // feeAccount should receive fee
+        // feeAccount FINAL Bal = Initial BAL + feeAmount)
+        const fee = (feePercent/100) * price
+        expect(+fromWei(feeAccountFinalEthBal)).to.equal(+fee + +fromWei(feeAccountInitialEthBal))
+
+    // (7:36:12) Buyer (addr2) should now own the nft (ownerOf(_tokenId))
+        expect(await nft.ownerOf(1)).to.equal(addr2.address)
+
+    // Make sure bool set to true when item sold
+        expect((await marketplace.items(1)).sold).to.equal(true)
+
+    }) // IT Success: "sold, paid, transfer. fees, Bought event" header
+
+// (7:37:00) - FAIL case 
+    it("Should fail for invalid item ids, sold items and when not enough ether is paid", async function () {
+        // fails for invalid item ids.  Pass purchaseItem (2) which is greater than the itemCount and (0) which is less than itemCount, which is 1.
+        await expect(
+            marketplace.connect(addr2).purchaseItem(2, {value: totalPriceInWei})
+        ).to.be.revertedWith("item doesn't exist")
+
+        await expect(
+            marketplace.connect(addr2).purchaseItem(0, {value: totalPriceInWei})
+        ).to.be.revertedWith("item doesn't exist")
+
+        // Fails when not enough ether is paid with the transaction. 
+        // In this instance, fails when buyer only sends enough ether to cover the price of the nft
+        // not the additional market fee.
+                                                    // {value: X} should be totalPriceInWei, NOT price
+        await expect(
+            marketplace.connect(addr2).purchaseItem(1, {value: toWei(price)})
+        ).to.be.revertedWith("not enough ether to cover item price and market fee")
+
+        // addr2 purchases item 1
+        await marketplace.connect(addr2).purchaseItem(1, { value: totalPriceInWei })
+
+    // Deployer (Address at array index 0) tries purchasing item 1 after its been sold. 
+        // github defines deployer this way: const addr3 =      addrs[0] and then marketplace.connect(addr3)...                 
+        // tutorial defined deployer at the very top with =     "let deployer, addr1, addr2, nft, marketplace;"
+                        // array_addresses[0]
+        await expect(
+            marketplace.connect(deployer).purchaseItem(1, { value: totalPriceInWei })
+        ).to.be.revertedWith("item already sold");
+    })
+// (7:38:51) - FAIL case completed.
+}); // Purchasing marketplace items describe header
 
 
 }) //NFTMarketplace describe header
+
+
+// See (https://github.com/dappuniversity/nft_marketplace/blob/main/src/backend/test/NFTMarketplace.test.js)
 
 
