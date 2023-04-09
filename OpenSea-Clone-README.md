@@ -207,7 +207,7 @@ undefined
 3. Open Zeppelin IERC721.sol contract: 
     - https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol
 
-
+    - Open Zeppelin's [ReentrancyGuard Docs](https://docs.openzeppelin.com/contracts/4.x/api/security#ReentrancyGuard) `(7:16:18)`
 
 
 ---
@@ -315,8 +315,9 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
 8. Finish Building out `Marketplace.sol` [(7:12:35)](https://youtu.be/cGQHXmCS94M?t=25955)
 
     - Add `struct Item` `(7:13:21)` - _Solidity equivalent of JavaScript Objects_.
+    - Open Zeppelin's [ReentrancyGuard Docs](https://docs.openzeppelin.com/contracts/4.x/api/security#ReentrancyGuard) `(7:16:18)`
+    - 
 
- 
 
 7. Build Frontend [()]()
         
