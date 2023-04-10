@@ -4,7 +4,7 @@
 pragma solidity >=0.8.4;
 
 //Import ERC721 Standard: https://docs.openzeppelin.com/contracts/2.x/api/token/erc721#ERC721
-import "../nft-marketplace/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "../../nft-marketplace/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 // MAIN Funcions we'll be using: 
     // 1. transferFrom(from, to, tokenId)

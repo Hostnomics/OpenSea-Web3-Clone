@@ -6,10 +6,10 @@ pragma solidity >=0.8.4;
 
 
 //github: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol
-import "../nft-marketplace/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "../../nft-marketplace/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 // (6:56:55) - Define a reentrancy guard contract to protect Marketplace.sol from reentrancy attacks
-import "../nft-marketplace/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../../nft-marketplace/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract Marketplace is ReentrancyGuard {
 

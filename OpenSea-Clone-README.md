@@ -324,6 +324,36 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
     - Write tests for our new `purchaseItem` and `getTotalPrice` functions at `(7:32:29)`
 
 
-7. Build Frontend [()]()
+7. Build Frontend [(07:39:07)](https://youtu.be/cGQHXmCS94M?t=27547)
+    
+    - (7A) **Deploy our completed Smart Contracts from the terminal with:**
+        > `npx hardhat run src/backend/scripts/deploy.js --network localhost`
+    
+        ```js
+
+        nft-marketplace % npx hardhat run src/backend/scripts/deploy.js --network localhost
+        Deploying contracts with the account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+        Account balance: 9999997654236664773850
+        NFT contract address 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+        Marketplace contract address 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+
+        ```
         
-        
+    - (7B) Add Hardhat node to your MetaMask / Browser Wallet
+        - In the terminal running **Hardhat Node** (`npx hardhat node`), grab the private keys for **Account #0** and **Account #1**
+        - **Import Account into MetaMask**
+            - On the **Hardhat Network** Click the Circle icon in the upper right hand corner
+            - Select `Import Account`
+            - Paste in the private key and save
+    
+    - (7C) `(7:41:28)` - Open **src/frontend/components/App.js**
+        - Setup `(7:41:36)`
+            - import ethers. Ethers.js will use MetaMask as its Ethereum Provider. 
+            - There are many different types of **Provider** but since the provider offered by MetaMask is called a **Web3 Provider** that is the one we are going to connect to `(7:42:19)`
+
+        - X from `(7:45:32)` to `(7:46:00)` Write the functions to connect us to the blockchain and load the contracts
+
+        - `(7:46:13)` - build navbar for our react routes
+
+        - 
+
