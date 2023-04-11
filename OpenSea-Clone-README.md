@@ -354,6 +354,10 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
         - X from `(7:45:32)` to `(7:46:00)` Write the functions to connect us to the blockchain and load the contracts
 
         - `(7:46:13)` - build navbar for our react routes
+            - Add src/frontend/components/NavBar.js (7:46:38)
+            - (7:47:50) - Import { Link } from "react-router-dom" `<Nav.Link as={Link} to="/">Home</Nav.Link>`
+            - 
+
 
         - 
 
