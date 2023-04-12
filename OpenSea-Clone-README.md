@@ -381,4 +381,42 @@ In **App.js** we bring in our Marketplace.sol and NFT.sol with:
 
 - 
     - (7D) - `7:58:58` - Start building the **Create.js**
-        -  
+        -  `(8:04:20)` - Build the user form to accept the inputs needed to create, mint and list an NFT
+        - `(8:05:50)` - Set link to the `Create.js` component in `App.js`
+
+```js
+// Link routes to Home and Create in App.js: 
+    <Routes> {/* (7:49:24) Route Element */}
+
+        <Route path="/" element={ 
+        <Home marketplace={marketplace} nft={nft} />                 
+        } />
+
+            {/* (8:05:50) link up Create Component */}
+        <Route path="/create" element={ 
+        <Create marketplace={marketplace} nft={nft} />
+        } />
+
+    </Routes>
+
+```
+
+- 
+    - (7E) `(8:06:19)` - Test out frontend `Create` form.
+
+    - (7F) - `(8:07:51)` - Build out **MyListedItem.js**
+        - `(8:10:39)` - Build out frontend
+        - At `(8:12:06)` - Add renderSoldItems function. (Completed `MyListedItems.js` component at `(8:12:50`)
+        - Add link to `MyListedItems.js` in **App.js** BUT also pass in `account={account}` at `(8:13:00)`:
+
+```js
+          {/* (8:13:00) link up MyListedItems Component. Don't forget `account={account}` */}
+                  <Route path="/my-listed-items" element={ 
+                    <MyListedItems marketplace={marketplace} nft={nft} account={account} />
+                   } />
+
+```
+- 
+    - (7G) - `()` - 
+        
+
