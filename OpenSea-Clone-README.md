@@ -359,5 +359,26 @@ At `(6:48:54)` add the `getContractFactory()` and `deploy()` methods from **ethe
             - 
 
 
-        - 
+        - `(7:50:48)` - Build out Component Pages for our Nav Routes (Home, Create, MyListingItem, MyPurchases)
 
+            - `(7:51:34)` - Set up Home.js Component
+                - `()` - import `Marketplace.sol` and `NFT.sol` into our `App.js` with: 
+                > <Home marketplace={marketplace} nft={nft} />
+
+In **App.js** we bring in our Marketplace.sol and NFT.sol with: 
+```js
+         // (7:44:39) - custom `loadContracts()` function
+        const marketplace = new ethers.Contract(MarketplaceAddress.address, MarketplaceAbi.abi, signer)
+        setMarketPlace(marketplace)
+        const nft = new ethers.Contract(NFTAddress.address, NFTAbi.abi, signer)     
+        setNFT(nft) 
+
+        // At (7:45:27) set the state variables for loadContracts() function: 
+        const [marketplace, setMarketPlace] = useState({}) //initial state with empty object
+        const [nft, setNFT] = useState({})
+
+```
+
+- 
+    - (7D) - `7:58:58` - Start building the **Create.js**
+        -  
