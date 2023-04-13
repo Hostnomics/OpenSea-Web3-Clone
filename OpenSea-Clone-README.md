@@ -417,6 +417,8 @@ In **App.js** we bring in our Marketplace.sol and NFT.sol with:
 
 ```
 - 
-    - (7G) - `()` - 
+    - (7G) - `(8:14:18)` - Add final `MyPurchases.js` component
+        - `(8:14:00)` - Listed/Sold similar to Pending X and Filled X. 
+        - 
         
 

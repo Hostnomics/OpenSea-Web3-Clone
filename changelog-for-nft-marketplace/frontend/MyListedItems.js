@@ -4,7 +4,7 @@ import { ethers } from "ethers"
 import { Row, Col, Card } from 'react-bootstrap'
 
 // At (8:12:06) - Add renderSoldItems function: 
-    function renderSoldItems(item){
+    function renderSoldItems(items){
         return (
             <>
               <h2>Sold</h2>
