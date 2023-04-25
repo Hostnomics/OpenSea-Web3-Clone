@@ -7,6 +7,18 @@
 [See the NVM Github Repository](https://github.com/nvm-sh/nvm).
     [_from tutorial by Michael-Kuehnel.de_](https://michael-kuehnel.de/node.js/2015/09/08/using-vm-to-switch-node-versions.html).
 
+
+**To install nvm** on your remote **web server** do the following: 
+1. Run the following command [(check NVM's Github for the latest version here)](https://github.com/nvm-sh/nvm)
+
+    > curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+
+    or
+
+    > wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+
+2. 
+
 ```js
 
 node -v
